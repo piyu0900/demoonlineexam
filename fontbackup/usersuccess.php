@@ -1,0 +1,97 @@
+<?php 
+
+require('configure.php'); 
+
+if(empty($_SESSION["userid"]))
+{
+	echo "<script>
+alert('Please before login');
+window.location.href='index.php';
+</script>"; 
+}
+
+$getAdminSetting = $pm->getSetting(1);
+
+?>
+<?php include "includes/header.php" ?>
+
+<body>
+
+
+
+<!--	<div id="introLoader" class="introLoading"></div>--> 
+
+<!-- start Container Wrapper -->
+
+
+    
+    <!-- start hero-header -->
+    
+    <div class="row topspace">
+      <div class="post-hero">
+        <div class="row">
+          <div class="container">
+            <div class="marqu-icon"> <a href="#"> <i class="fa fa-user" aria-hidden="true"></i> </a> </div>
+            <?php include "includes/dashboard-marquee.php" ?>
+            <p class="upload"><i class="fa fa-cloud-upload"></i><a href="student-resume.php">Upload Resume</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="row"> <img src="images/banner/e-library.jpg" alt="" width="100%"> </div>
+    </div>
+    
+    <!-- end hero-header -->
+    
+  <div class="row">
+  <div class="side-left side-left1"><a href="#" target="_blank"><img src="images/banner/ads.jpg"></a></div>
+<div class="side-right side-right1"><a href="#" target="_blank"><img src="images/banner/ads.jpg"></a></div>
+  </div>
+      <div class="pb-50">
+        <div class="container bg-shadow bg-width">
+          <div class="row">
+          
+          
+			<div class="col-md-12">
+			<?php
+			if($_REQUEST['payment_status'] == 'Completed')
+			{
+				$item_number = $_REQUEST['item_number'];
+				$payment_gross = $_REQUEST['payment_gross'];
+				$txn_id = $_REQUEST['txn_id'];
+				$mc_currency = $_REQUEST['mc_currency'];
+				$userid = $_SESSION['userid'];
+				$date  = date('Y-m-d');
+				$payment_insert = mysql_query("insert into `admin_payment_post` (`user_id`,`product_name`,`payment_mode`,`payment_gross`,`txn_id`,`mc_currency`,`satus`,`date`) values ('".$userid."','Post Unlimited','Paypal','".$payment_gross."','".$txn_id."','".$mc_currency."','".$_REQUEST['payment_status']."','".$date."')");
+				echo "<script>
+alert('Payment Successful');
+window.location.href='index.php';
+</script>"; 
+				
+			}
+			else
+			{
+				$payment_gross = $_REQUEST['payment_gross'];
+				$txn_id = $_REQUEST['txn_id'];
+				$mc_currency = $_REQUEST['mc_currency'];
+				$userid = $_SESSION['userid'];
+				$product_id = $_SESSION['userid'];
+				$date  = date('Y-m-d');
+				$payment_insert = mysql_query("insert into `admin_payment_post` (`user_id`,`product_name`,`payment_mode`,`payment_gross`,`txn_id`,`mc_currency`,`satus`,`date`) values ('".$userid."','Post Unlimited','Paypal','".$payment_gross."','".$txn_id."','".$mc_currency."','".$_REQUEST['payment_status']."','".$date."')");
+				echo "<script>
+alert('Payment Failed');
+window.location.href='index.php';
+</script>"; 
+			}
+			?>
+			
+			</div>          
+			
+			
+        </div>
+      </div>
+  
+    <div class="clearfix"></div>
+    
+    
+    <!--....................................footer start..............................-->
+    <?php include "includes/footer.php" ?>
