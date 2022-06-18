@@ -6,5 +6,8 @@ Custom php
 Online exam functionality
 Total marks count with deduct negitive marks functionality
 Images and content can able to change from admin panel
+Testimonial funtionality
+FAQ functionality
+Social links
 Wordpress blog functionality
 contact from function
